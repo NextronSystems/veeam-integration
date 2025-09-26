@@ -40,6 +40,8 @@ AntivirusInfos.xml
 
 Edit the listing of the antivirus software and add the following entry for THOR.
 
+![Veeam Mount Service Directory](images/pic2.png)
+
 Depending on your use case, you can choose between two configurations:  
 
 ---
@@ -88,11 +90,10 @@ This configuration is optimized for continuous or scheduled preventive scans of 
 </Antiviruses>
 ```
 
-**Recommendation:**  
-- Use **Intensive Scan** during **incident response** or when time-to-result matters most.  
-- Use **Gentle Scan** for **preventive, regular scanning** of backups, where stability of the backup server is more important than scanning speed.  
+**Recommendation:**
 
-![Veeam Mount Service Directory](images/pic2.png)
+- Use **Intensive Scan** during **incident response** or when time-to-result matters most.  
+- Use **Gentle Scan** for **preventive, regular scanning** of backups, where stability of the backup server is more important than scanning speed.
 
 ---
 
