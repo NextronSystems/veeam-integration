@@ -38,22 +38,59 @@ Open the file:
 AntivirusInfos.xml
 ```
 
-Edit the listing of the antivirus software and add the following entry for THOR:
+Edit the listing of the antivirus software and add the following entry for THOR.
 
-```
+Depending on your use case, you can choose between two configurations:  
+
+---
+
+### Option A – Intensive Scan (for Incident Response)
+
+This configuration is designed for maximum coverage and speed, for example when verifying backups during an active incident response.  
+
+- Uses almost all CPU cores (`--threads -2`, leaves 2 free)  
+- Scans **all files** without limitation  
+- Ignores memory pressure (`--norescontrol`), does not stop when free RAM is low  
+
+```xml
 <Antiviruses>
 ...
-  <!-- THOR Scanner-->
-  <AntivirusInfo Name='THOR Scanner' IsPortableSoftware='true' ExecutableFilePath='%ProgramFiles%\Thor\thor64.exe' CommandLineParameters='-a Filescan --intense --threads -2 --norescontrol --cross-platform --follow-symlinks --nothordb -e %ProgramFiles%\Thor -p %Path%' RegPath='' ServiceName='' ThreatExistsRegEx='ALERTS:\s*[1-9]\d*|WARNINGS:\s*[1-9]\d*' IsParallelScanAvailable='false'>
-    <ExitCodes>
-      <ExitCode Type='Success' Description='Command executed successfully'>0</ExitCode>
-      <ExitCode Type='Infected' Description='A threat was detected on the system'>1</ExitCode>
-    </ExitCodes>
-  </AntivirusInfo>
+    <!-- THOR Scanner (Intensive) -->
+    <AntivirusInfo Name='THOR Scanner' IsPortableSoftware='true' ExecutableFilePath='%ProgramFiles%\Thor\thor64.exe' CommandLineParameters='-a Filescan --intense --threads -2 --norescontrol --cross-platform --follow-symlinks --nothordb -e %ProgramFiles%\Thor -p %Path%' RegPath='' ServiceName='' ThreatExistsRegEx='ALERTS:\s*[1-9]\d*|WARNINGS:\s*[1-9]\d*' IsParallelScanAvailable='false'>
+        <ExitCodes>
+            <ExitCode Type='Success' Description='Command executed successfully'>0</ExitCode>
+            <ExitCode Type='Infected' Description='A threat was detected on the system'>1</ExitCode>
+        </ExitCodes>
+    </AntivirusInfo>
 </Antiviruses>
 ```
 
-Save the changes.
+---
+
+### Option B – Gentle Scan (for Preventive Scanning)
+
+This configuration is optimized for continuous or scheduled preventive scans of backups, where system impact must be minimized.  
+
+- Uses only **one CPU thread**  
+- Respects system resources (resource control active, scan stops before memory swapping)  
+- Scans only relevant file types (not every single file)  
+
+```xml
+<Antiviruses>
+...
+    <!-- THOR Scanner (Gentle) -->
+    <AntivirusInfo Name='THOR Scanner' IsPortableSoftware='true' ExecutableFilePath='%ProgramFiles%\Thor\thor64.exe' CommandLineParameters='-a Filescan --cross-platform --follow-symlinks --nothordb -e %ProgramFiles%\Thor -p %Path%' RegPath='' ServiceName='' ThreatExistsRegEx='ALERTS:\s*[1-9]\d*|WARNINGS:\s*[1-9]\d*' IsParallelScanAvailable='false'>
+        <ExitCodes>
+            <ExitCode Type='Success' Description='Command executed successfully'>0</ExitCode>
+            <ExitCode Type='Infected' Description='A threat was detected on the system'>1</ExitCode>
+        </ExitCodes>
+    </AntivirusInfo>
+</Antiviruses>
+```
+
+**Recommendation:**  
+- Use **Intensive Scan** during **incident response** or when time-to-result matters most.  
+- Use **Gentle Scan** for **preventive, regular scanning** of backups, where stability of the backup server is more important than scanning speed.  
 
 ![Veeam Mount Service Directory](images/pic2.png)
 
