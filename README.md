@@ -1,14 +1,10 @@
 # Integration of THOR into Veeam Backup & Replication
 
 This guide explains how to integrate the Nextron THOR forensic scanner into Veeam Backup & Replication in order to scan restore points for attacker artefacts and anomalies.
-
----
-
 ## Prerequisites
-- Veeam Backup & Replication installed
-- THOR scanner with valid license file
 
----
+- Veeam Backup & Replication installed
+- THOR scanner with valid license file (Lab License required for full functionality)
 
 ## Step 1 – Place THOR
 
@@ -21,8 +17,6 @@ C:\Program Files\THOR
 Make sure the license file is located in the same directory.
 
 ![THOR Directory](images/pic1.png)
-
----
 
 ## Step 2 – Adjust Veeam Mount Services
 
@@ -46,8 +40,6 @@ See Veeam's [official documentation](https://www.veeam.com/kb3132) for more info
 
 Depending on your use case, you can choose between two configurations:  
 
----
-
 ### Option A – Intensive Scan (for Incident Response)
 
 This configuration is designed for maximum coverage and speed, for example when verifying backups during an active incident response.  
@@ -68,8 +60,6 @@ This configuration is designed for maximum coverage and speed, for example when 
     </AntivirusInfo>
 </Antiviruses>
 ```
-
----
 
 ### Option B – Gentle Scan (for Preventive Scanning)
 
@@ -97,8 +87,6 @@ This configuration is optimized for continuous or scheduled preventive scans of 
 - Use **Intensive Scan** during **incident response** or when time-to-result matters most.  
 - Use **Gentle Scan** for **preventive, regular scanning** of backups, where stability of the backup server is more important than scanning speed.
 
----
-
 ## Step 3 – Change Veeam Configuration
 
 In the Veeam Console:
@@ -112,8 +100,6 @@ In the Veeam Console:
 4. Confirm with **OK**.
 
 ![Veeam Settings](images/pic3.png)
-
----
 
 ## Step 4 – Start a Backup Scan
 
@@ -129,16 +115,12 @@ Veeam will now pass the job to THOR.
 
 ![Veeam Scan Backup](images/pic4.png)
 
----
-
 ## Step 5 – Monitor the Scan
 
 - Veeam hands off the job to **THOR**.
 - **THOR** scans the restore points for forensic artefacts.
 
 ![Veeam Job Progress](images/pic5.png)
-
----
 
 ## Step 6 – Review the Findings
 
@@ -147,8 +129,6 @@ After completion, the reports are written to the output directory as:
 
 - `.txt` (structured report)
 - `.html` (for comfortable viewing in the browser)
-
----
 
 ## Result
 
