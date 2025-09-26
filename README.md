@@ -42,6 +42,8 @@ Edit the listing of the antivirus software and add the following entry for THOR.
 
 ![Veeam Mount Service Directory](images/pic2.png)
 
+See Veeam's [official documentation](https://www.veeam.com/kb3132) for more information on this file.
+
 Depending on your use case, you can choose between two configurations:  
 
 ---
